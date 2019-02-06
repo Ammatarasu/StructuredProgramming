@@ -14,6 +14,3 @@ post_id = posts.insert_one(post).inserted_id
 
 
 pprint.pprint(posts.find_one())
-print('github test')
-
-#testing if github actually works now
