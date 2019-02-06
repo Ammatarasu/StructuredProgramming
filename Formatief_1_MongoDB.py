@@ -1,16 +1,27 @@
+import pymongo
 from pymongo import MongoClient
-import datetime
+
 import pprint
+
+
 client = MongoClient()
-db = client.test_database
+db = client["SP_Formatief_1"]
+products = db['products']
+profiles = db['profiles']
+sessions = db['sessions']
 
-post = {"author": "Mike",
-        "text": "My first blog post!",
-        "tags": ["mongodb", "python", "pymongo"],
-        "date": datetime.datetime.utcnow()}
-
-posts = db.posts
-post_id = posts.insert_one(post).inserted_id
+def findFirst():
+        pprint.pprint(products.find({}))
 
 
-pprint.pprint(posts.find_one())
+
+
+def findletter():
+        for i in products.find():
+                name = i["name"]
+                if name[0] == "R":
+                        print(name)
+                        break
+
+
+
