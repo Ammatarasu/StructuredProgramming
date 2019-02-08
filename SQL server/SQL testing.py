@@ -8,7 +8,7 @@ db = client["databaseopisop"]
 products = db['products']
 profiles = db['profiles']
 sessions = db['sessions']
-finder = products.find().limit(20)
+finder = products.find()
 
 #connection to SQL server
 conn = pyodbc.connect('Driver={SQL Server};'
@@ -16,18 +16,17 @@ conn = pyodbc.connect('Driver={SQL Server};'
                         'Database=opisop;'
                         'Trusted_Connection=yes;')
 
-
 cursor = conn.cursor()
 
 
 def findnumberproducts(number):
     counter = 0
     while counter < number:
-        for i in products.find():
+        for i in products.find().limit(20):
             name = i['name']
             brand = i['brand']
             price = i['price']['selling_price']
-            id = int(i['_id'])
+
             counter = counter +1
             insertion = [name, brand, price]
             sqlinsert(insertion)
@@ -41,5 +40,5 @@ def sqlinsert(insert):
     conn.commit()
 
 
-defineproduct(10)
+findnumberproducts(15)
 
