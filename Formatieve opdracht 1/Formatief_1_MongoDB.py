@@ -9,6 +9,7 @@ db = client["SP_Formatief_1"]
 products = db['products']
 profiles = db['profiles']
 sessions = db['sessions']
+finder = products.find()
 
 def findFirst():
         """Finds first object in the products collection"""
@@ -28,15 +29,18 @@ def findletter(letter):
 def averageprice():
         calcprice = []
 
-        for i in products.find():
+        for i in finder:
                 price = i["price"]["selling_price"]
                 calcprice.append(price)
         average = sum(calcprice)/len(calcprice)
         europrice = average / 100
         return europrice
+
+
 print(findFirst())
 print(findletter("R"))
 print(averageprice())
+
 
 
 
