@@ -1,6 +1,7 @@
 import pyodbc
 from pymongo import MongoClient
-
+import random
+import pprint
 
 #connecting to MongoDB server
 client = MongoClient()
@@ -39,6 +40,7 @@ def defineproduct(o):
 
 def categories():
     categories = []
+
     for i in finder:
         try:
             category = i['category']
@@ -47,6 +49,7 @@ def categories():
                 categories.append(category)
         except KeyError:
             category = "null"
+            categories.append(category)
             print('No Category')
 
     print(categories)
@@ -85,6 +88,20 @@ def findofcat():
             availablecats.remove(category)
             insert = [name, brand, price]
             sqlinsert(insert)
-findofcat()
+
+def fetchall():
+    return cursor.fetchall()
+
+def findrandom():
+    db = conn.execute('select * from product')
+    fetch = db.fetchall()
+
+    for i in fetch:
+        item = []
+        item.append(i)
+
+    print(item)
+
+findrandom()
 
 
