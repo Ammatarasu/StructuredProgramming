@@ -48,7 +48,7 @@ def sqlinsert(insert):
     conn.commit()
 
 def findofcat():
-    """door de hele MongoDB Database en zoekt van elke category """
+    """door de hele MongoDB Database en zoekt van elke category 1 product en stuurt deze naar de sqlinsert functie om deze in de mssql server te zetten"""
     availablecats = ['Gezond & verzorging', 'Wonen & vrije tijd', 'Huishouden', 'Elektronica & media',
                      'Kleding & sieraden', 'Eten & drinken', 'Make-up & geuren', 'Baby & kind', None, 'Opruiming',
                      'Black Friday', 'Cadeau ideeën', 'op=opruiming', '50% korting', 'Nieuw', 'Extra Deals',
@@ -79,6 +79,7 @@ def fetchall():
     return cursor.fetchall()
 
 def makearray():
+    "Zet de data van de sql server om in python lists"
     db = conn.execute('select * from product')
     fetch = db.fetchall()
     array = []
@@ -108,6 +109,7 @@ def findfar():
     return name, priceobj, currentdiff
 
 def averageprice():
+    """berekende de gemmidelde prijs van de producten in de sql server"""
     array = makearray()
     pricelst = []
     for i in array:
