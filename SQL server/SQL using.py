@@ -20,25 +20,9 @@ conn = pyodbc.connect('Driver={SQL Server};'
 cursor = conn.cursor()
 
 
-def defineproduct(o):
-        i = finder[o]
-        name = i['name']
-        category = i['category']
-        try:
-            sub_category = i['sub_category']
-        except KeyError:
-            sub_category = "null"
-        try:
-            sub_sub_category = i['sub_sub_category']
-        except KeyError:
-            sub_sub_category = 'null'
-        brand = i['brand']
-        price = i['price']['selling_price']
-        doelgroep = i['properties']['doelgroep']
-        productdetail = [name, brand, price]
-        return productdetail
 
 def categories():
+    """gaat door de hele MongoDB database en return een list met alle verschillende cagegorieen"""
     categories = []
 
     for i in finder:
@@ -52,9 +36,10 @@ def categories():
             categories.append(category)
             print('No Category')
 
-    print(categories)
+    return categories
 
 def sqlinsert(insert):
+    """verwacht een list in de volgorde naam, merk, en prijs. En zet deze in de sql database in tabel product"""
     cursor.execute('SELECT * FROM product')
     cursor.execute('''
                     INSERT INTO product (name, brand, price)
@@ -63,6 +48,7 @@ def sqlinsert(insert):
     conn.commit()
 
 def findofcat():
+    """door de hele MongoDB Database en zoekt van elke category """
     availablecats = ['Gezond & verzorging', 'Wonen & vrije tijd', 'Huishouden', 'Elektronica & media',
                      'Kleding & sieraden', 'Eten & drinken', 'Make-up & geuren', 'Baby & kind', None, 'Opruiming',
                      'Black Friday', 'Cadeau ideeën', 'op=opruiming', '50% korting', 'Nieuw', 'Extra Deals',
@@ -92,16 +78,34 @@ def findofcat():
 def fetchall():
     return cursor.fetchall()
 
-def findrandom():
+def fetchall():
     db = conn.execute('select * from product')
     fetch = db.fetchall()
-
+    array = []
     for i in fetch:
-        item = []
-        item.append(i)
+        list = [x for x in i]
+        array.append(list)
+    return array
 
-    print(item)
 
-findrandom()
+def findrandom():
+    fetch = fetchall()
+    select = fetch[random.randrange(0,len(fetch))]
+    return select
+
+def findfar():
+    originobj = findrandom()
+    price = originobj[1]
+    currentdiff = 0
+    for i in fetchall():
+        diff = abs(i[1]-price)
+        if diff > currentdiff:
+            currentdiff = diff
+            name = i[0]
+            priceobj = i[1]
+    return name, priceobj, currentdiff
+
+print(findfar())
+
 
 
