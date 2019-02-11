@@ -122,5 +122,3 @@ print(averageprice())      #geeft de gemiddelde prijs van de producten in de SQL
 
 
 
-
-
