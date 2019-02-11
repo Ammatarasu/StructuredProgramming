@@ -10,7 +10,7 @@ products = db['products']
 profiles = db['profiles']
 sessions = db['sessions']
 finder = products.find()
-
+print(type(finder))
 def findFirst():
         """Finds first object in the products collection"""
         object = products.find_one()

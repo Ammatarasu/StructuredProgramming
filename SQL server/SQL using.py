@@ -78,7 +78,7 @@ def findofcat():
 def fetchall():
     return cursor.fetchall()
 
-def fetchall():
+def makearray():
     db = conn.execute('select * from product')
     fetch = db.fetchall()
     array = []
@@ -89,11 +89,13 @@ def fetchall():
 
 
 def findrandom():
-    fetch = fetchall()
+    """vind een random item in de SQL databse"""
+    fetch = makearray()
     select = fetch[random.randrange(0,len(fetch))]
     return select
 
 def findfar():
+    """Find het product waarvan"""
     originobj = findrandom()
     price = originobj[1]
     currentdiff = 0
@@ -105,7 +107,16 @@ def findfar():
             priceobj = i[1]
     return name, priceobj, currentdiff
 
-print(findfar())
+def averageprice():
+    array = makearray()
+    pricelst = []
+    for i in array:
+        pricelst.append(i[1])
+    average = sum(pricelst)/len(pricelst)
+    return average
 
 
+
+
+print(averageprice())
 
