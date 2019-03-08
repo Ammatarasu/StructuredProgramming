@@ -134,5 +134,4 @@ def findofcat():
 
 # ----------------------------------------------------------------------------------------------------------------------
 # Opdracht uivoeren
-print(findfar())  # vind een random product en zoekt het product met de grootste afwijking in prijs
-print(averageprice())  # geeft de gemiddelde prijs van de producten in de SQL database
+findofcat()
